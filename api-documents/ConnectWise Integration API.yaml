@@ -1,0 +1,4640 @@
+openapi: 3.0.3
+info:
+  title: ConnectWise Integration API
+  version: 1.0.0
+  description: API for integrating with ConnectWise, managing companies, projects,
+    tickets, and more.
+paths:
+  /activecampaign/api/new-contact:
+    get:
+      operationId: activecampaign_api_new_contact_retrieve
+      tags:
+      - activecampaign
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: activecampaign_api_new_contact_create
+      tags:
+      - activecampaign
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /apis/auth/login:
+    post:
+      operationId: auth_login_create
+      tags:
+      - auth
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /apis/auth/register:
+    post:
+      operationId: auth_register_create
+      tags:
+      - auth
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /apis/auth/verify-email/{token}:
+    get:
+      operationId: auth_verify_email_retrieve
+      parameters:
+      - in: path
+        name: token
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - auth
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /apis/boards:
+    get:
+      operationId: boards_list
+      description: |-
+        API endpoint for Board management
+
+        list:
+            Return a list of all boards
+
+        create:
+            Create a new board
+
+        retrieve:
+            Return a specific board
+
+        update:
+            Update a board
+
+        partial_update:
+            Update part of a board
+
+        destroy:
+            Delete a board
+
+        sync:
+            Sync boards with ConnectWise
+      parameters:
+      - in: query
+        name: department_name
+        schema:
+          type: string
+      - in: query
+        name: department_name__icontains
+        schema:
+          type: string
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
+      - in: query
+        name: location_name
+        schema:
+          type: string
+      - in: query
+        name: location_name__icontains
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: project_flag
+        schema:
+          type: boolean
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - boards
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedBoardList'
+          description: ''
+  /apis/boards/{id}:
+    get:
+      operationId: boards_retrieve
+      description: |-
+        API endpoint for Board management
+
+        list:
+            Return a list of all boards
+
+        create:
+            Create a new board
+
+        retrieve:
+            Return a specific board
+
+        update:
+            Update a board
+
+        partial_update:
+            Update part of a board
+
+        destroy:
+            Delete a board
+
+        sync:
+            Sync boards with ConnectWise
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this board.
+        required: true
+      tags:
+      - boards
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Board'
+          description: ''
+  /apis/boards/sync:
+    post:
+      operationId: boards_sync_create
+      description: Sync boards with ConnectWise
+      tags:
+      - boards
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BoardRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BoardRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BoardRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Board'
+          description: ''
+  /apis/companies:
+    get:
+      operationId: companies_list
+      description: |-
+        API endpoint for Company management
+
+        list:
+            Return a list of all companys
+
+        create:
+            Create a new company
+
+        retrieve:
+            Return a specific company
+
+        update:
+            Update a company
+
+        partial_update:
+            Update part of a company
+
+        destroy:
+            Delete a company
+
+        sync:
+            Sync companys with ConnectWise
+      parameters:
+      - in: query
+        name: city
+        schema:
+          type: string
+      - in: query
+        name: city__icontains
+        schema:
+          type: string
+      - in: query
+        name: country_name
+        schema:
+          type: string
+      - in: query
+        name: country_name__icontains
+        schema:
+          type: string
+      - in: query
+        name: is_deleted
+        schema:
+          type: boolean
+      - in: query
+        name: is_lead
+        schema:
+          type: boolean
+      - in: query
+        name: is_unsubscribed
+        schema:
+          type: boolean
+      - in: query
+        name: is_vendor
+        schema:
+          type: boolean
+      - in: query
+        name: market_name
+        schema:
+          type: string
+      - in: query
+        name: market_name__icontains
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: state
+        schema:
+          type: string
+      - in: query
+        name: state__icontains
+        schema:
+          type: string
+      - in: query
+        name: status
+        schema:
+          type: integer
+      - in: query
+        name: territory_name
+        schema:
+          type: string
+      - in: query
+        name: territory_name__icontains
+        schema:
+          type: string
+      tags:
+      - companies
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCompanyList'
+          description: ''
+  /apis/companies/{id}:
+    get:
+      operationId: companies_retrieve
+      description: |-
+        API endpoint for Company management
+
+        list:
+            Return a list of all companys
+
+        create:
+            Create a new company
+
+        retrieve:
+            Return a specific company
+
+        update:
+            Update a company
+
+        partial_update:
+            Update part of a company
+
+        destroy:
+            Delete a company
+
+        sync:
+            Sync companys with ConnectWise
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this company.
+        required: true
+      tags:
+      - companies
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+          description: ''
+  /apis/companies/sync:
+    post:
+      operationId: companies_sync_create
+      description: Sync companys with ConnectWise
+      tags:
+      - companies
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CompanyRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CompanyRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+          description: ''
+  /apis/company-statuses:
+    get:
+      operationId: company_statuses_list
+      description: |-
+        API endpoint for CompanyStatus management
+
+        list:
+            Return a list of all companystatuss
+
+        create:
+            Create a new companystatus
+
+        retrieve:
+            Return a specific companystatus
+
+        update:
+            Update a companystatus
+
+        partial_update:
+            Update part of a companystatus
+
+        destroy:
+            Delete a companystatus
+
+        sync:
+            Sync companystatuss with ConnectWise
+      parameters:
+      - in: query
+        name: disallow_saving
+        schema:
+          type: boolean
+      - in: query
+        name: is_default
+        schema:
+          type: boolean
+      - in: query
+        name: is_inactive
+        schema:
+          type: boolean
+      - in: query
+        name: notify
+        schema:
+          type: boolean
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - company-statuses
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCompanyStatusList'
+          description: ''
+  /apis/company-statuses/{id}:
+    get:
+      operationId: company_statuses_retrieve
+      description: |-
+        API endpoint for CompanyStatus management
+
+        list:
+            Return a list of all companystatuss
+
+        create:
+            Create a new companystatus
+
+        retrieve:
+            Return a specific companystatus
+
+        update:
+            Update a companystatus
+
+        partial_update:
+            Update part of a companystatus
+
+        destroy:
+            Delete a companystatus
+
+        sync:
+            Sync companystatuss with ConnectWise
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this company status.
+        required: true
+      tags:
+      - company-statuses
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyStatus'
+          description: ''
+  /apis/company-statuses/sync:
+    post:
+      operationId: company_statuses_sync_create
+      description: Sync companystatuss with ConnectWise
+      tags:
+      - company-statuses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyStatusRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CompanyStatusRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CompanyStatusRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyStatus'
+          description: ''
+  /apis/contacts:
+    get:
+      operationId: contacts_list
+      description: |-
+        API endpoint for Contact management
+
+        list:
+            Return a list of all contacts
+
+        create:
+            Create a new contact
+
+        retrieve:
+            Return a specific contact
+
+        update:
+            Update a contact
+
+        partial_update:
+            Update part of a contact
+
+        destroy:
+            Delete a contact
+
+        sync:
+            Sync contacts with ConnectWise
+      parameters:
+      - in: query
+        name: company_id
+        schema:
+          type: integer
+      - in: query
+        name: company_id__icontains
+        schema:
+          type: integer
+      - in: query
+        name: disable_portal_login
+        schema:
+          type: boolean
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: portal_security_level
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - contacts
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedContactList'
+          description: ''
+  /apis/contacts/{id}:
+    get:
+      operationId: contacts_retrieve
+      description: |-
+        API endpoint for Contact management
+
+        list:
+            Return a list of all contacts
+
+        create:
+            Create a new contact
+
+        retrieve:
+            Return a specific contact
+
+        update:
+            Update a contact
+
+        partial_update:
+            Update part of a contact
+
+        destroy:
+            Delete a contact
+
+        sync:
+            Sync contacts with ConnectWise
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this contact.
+        required: true
+      tags:
+      - contacts
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+          description: ''
+  /apis/contacts/sync:
+    post:
+      operationId: contacts_sync_create
+      description: Sync contacts with ConnectWise
+      tags:
+      - contacts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ContactRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ContactRequest'
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+          description: ''
+  /apis/members:
+    get:
+      operationId: members_list
+      description: |-
+        API endpoint for Member management
+
+        list:
+            Return a list of all members
+
+        create:
+            Create a new member
+
+        retrieve:
+            Return a specific member
+
+        update:
+            Update a member
+
+        partial_update:
+            Update part of a member
+
+        destroy:
+            Delete a member
+
+        sync:
+            Sync members with ConnectWise
+      parameters:
+      - in: query
+        name: admin_flag
+        schema:
+          type: boolean
+      - in: query
+        name: default_department_name
+        schema:
+          type: string
+      - in: query
+        name: default_department_name__icontains
+        schema:
+          type: string
+      - in: query
+        name: default_location_name
+        schema:
+          type: string
+      - in: query
+        name: default_location_name__icontains
+        schema:
+          type: string
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - members
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedMemberList'
+          description: ''
+  /apis/members/{id}:
+    get:
+      operationId: members_retrieve
+      description: |-
+        API endpoint for Member management
+
+        list:
+            Return a list of all members
+
+        create:
+            Create a new member
+
+        retrieve:
+            Return a specific member
+
+        update:
+            Update a member
+
+        partial_update:
+            Update part of a member
+
+        destroy:
+            Delete a member
+
+        sync:
+            Sync members with ConnectWise
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this member.
+        required: true
+      tags:
+      - members
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+          description: ''
+  /apis/members/sync:
+    post:
+      operationId: members_sync_create
+      description: Sync members with ConnectWise
+      tags:
+      - members
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MemberRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MemberRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+          description: ''
+  /apis/priorities:
+    get:
+      operationId: priorities_list
+      description: |-
+        API endpoint for Priority management
+
+        list:
+            Return a list of all prioritys
+
+        create:
+            Create a new priority
+
+        retrieve:
+            Return a specific priority
+
+        update:
+            Update a priority
+
+        partial_update:
+            Update part of a priority
+
+        destroy:
+            Delete a priority
+
+        sync:
+            Sync prioritys with ConnectWise
+      parameters:
+      - in: query
+        name: color
+        schema:
+          type: string
+      - in: query
+        name: color__icontains
+        schema:
+          type: string
+      - in: query
+        name: is_default
+        schema:
+          type: boolean
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - priorities
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPriorityList'
+          description: ''
+  /apis/priorities/{id}:
+    get:
+      operationId: priorities_retrieve
+      description: |-
+        API endpoint for Priority management
+
+        list:
+            Return a list of all prioritys
+
+        create:
+            Create a new priority
+
+        retrieve:
+            Return a specific priority
+
+        update:
+            Update a priority
+
+        partial_update:
+            Update part of a priority
+
+        destroy:
+            Delete a priority
+
+        sync:
+            Sync prioritys with ConnectWise
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this priority.
+        required: true
+      tags:
+      - priorities
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Priority'
+          description: ''
+  /apis/priorities/sync:
+    post:
+      operationId: priorities_sync_create
+      description: Sync prioritys with ConnectWise
+      tags:
+      - priorities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PriorityRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PriorityRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PriorityRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Priority'
+          description: ''
+  /apis/projects:
+    get:
+      operationId: projects_list
+      description: |-
+        API endpoint for Project management
+
+        list:
+            Return a list of all projects
+
+        create:
+            Create a new project
+
+        retrieve:
+            Return a specific project
+
+        update:
+            Update a project
+
+        partial_update:
+            Update part of a project
+
+        destroy:
+            Delete a project
+
+        sync:
+            Sync projects with ConnectWise
+      parameters:
+      - in: query
+        name: board_name
+        schema:
+          type: string
+      - in: query
+        name: board_name__icontains
+        schema:
+          type: string
+      - in: query
+        name: company_identifier
+        schema:
+          type: string
+      - in: query
+        name: company_identifier__icontains
+        schema:
+          type: string
+      - in: query
+        name: department_name
+        schema:
+          type: string
+      - in: query
+        name: department_name__icontains
+        schema:
+          type: string
+      - in: query
+        name: is_closed
+        schema:
+          type: boolean
+      - in: query
+        name: manager_identifier
+        schema:
+          type: string
+      - in: query
+        name: manager_identifier__icontains
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: status_name
+        schema:
+          type: string
+      - in: query
+        name: status_name__icontains
+        schema:
+          type: string
+      - in: query
+        name: type_name
+        schema:
+          type: string
+      - in: query
+        name: type_name__icontains
+        schema:
+          type: string
+      tags:
+      - projects
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProjectList'
+          description: ''
+  /apis/projects/{id}:
+    get:
+      operationId: projects_retrieve
+      description: |-
+        API endpoint for Project management
+
+        list:
+            Return a list of all projects
+
+        create:
+            Create a new project
+
+        retrieve:
+            Return a specific project
+
+        update:
+            Update a project
+
+        partial_update:
+            Update part of a project
+
+        destroy:
+            Delete a project
+
+        sync:
+            Sync projects with ConnectWise
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this project.
+        required: true
+      tags:
+      - projects
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: ''
+  /apis/projects/sync:
+    post:
+      operationId: projects_sync_create
+      description: Sync projects with ConnectWise
+      tags:
+      - projects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProjectRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProjectRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: ''
+  /apis/schema:
+    get:
+      operationId: schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - schema
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /apis/statuses:
+    get:
+      operationId: statuses_list
+      description: |-
+        API endpoint for Status management
+
+        list:
+            Return a list of all statuss
+
+        create:
+            Create a new status
+
+        retrieve:
+            Return a specific status
+
+        update:
+            Update a status
+
+        partial_update:
+            Update part of a status
+
+        destroy:
+            Delete a status
+
+        sync:
+            Sync statuss with ConnectWise
+      parameters:
+      - in: query
+        name: board_id
+        schema:
+          type: integer
+      - in: query
+        name: board_id__icontains
+        schema:
+          type: integer
+      - in: query
+        name: closed_status
+        schema:
+          type: boolean
+      - in: query
+        name: customer_portal_flag
+        schema:
+          type: boolean
+      - in: query
+        name: default_flag
+        schema:
+          type: boolean
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: time_entry_not_allowed
+        schema:
+          type: boolean
+      tags:
+      - statuses
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedStatusList'
+          description: ''
+  /apis/statuses/{id}:
+    get:
+      operationId: statuses_retrieve
+      description: |-
+        API endpoint for Status management
+
+        list:
+            Return a list of all statuss
+
+        create:
+            Create a new status
+
+        retrieve:
+            Return a specific status
+
+        update:
+            Update a status
+
+        partial_update:
+            Update part of a status
+
+        destroy:
+            Delete a status
+
+        sync:
+            Sync statuss with ConnectWise
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this status.
+        required: true
+      tags:
+      - statuses
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+          description: ''
+  /apis/statuses/sync:
+    post:
+      operationId: statuses_sync_create
+      description: Sync statuss with ConnectWise
+      tags:
+      - statuses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatusRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StatusRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StatusRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+          description: ''
+  /apis/tickets:
+    get:
+      operationId: tickets_list
+      description: Get a list of all tickets with optional filtering
+      summary: List tickets
+      parameters:
+      - in: query
+        name: board_name
+        schema:
+          type: string
+      - in: query
+        name: board_name__icontains
+        schema:
+          type: string
+      - in: query
+        name: company_identifier
+        schema:
+          type: string
+      - in: query
+        name: company_identifier__icontains
+        schema:
+          type: string
+      - in: query
+        name: is_closed
+        schema:
+          type: boolean
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: priority_name
+        schema:
+          type: string
+      - in: query
+        name: priority_name__icontains
+        schema:
+          type: string
+      - in: query
+        name: project_id
+        schema:
+          type: integer
+      - in: query
+        name: record_type
+        schema:
+          type: string
+      - in: query
+        name: record_type__icontains
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: status_name
+        schema:
+          type: string
+      - in: query
+        name: status_name__icontains
+        schema:
+          type: string
+      - in: query
+        name: type_name
+        schema:
+          type: string
+      - in: query
+        name: type_name__icontains
+        schema:
+          type: string
+      tags:
+      - tickets
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTicketList'
+          description: ''
+  /apis/tickets/{id}:
+    get:
+      operationId: tickets_retrieve
+      description: Get a specific ticket by ID
+      summary: Get ticket
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this ticket.
+        required: true
+      tags:
+      - tickets
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+          description: ''
+  /apis/tickets/sync:
+    post:
+      operationId: tickets_sync_create
+      description: Sync tickets with ConnectWise
+      tags:
+      - tickets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TicketRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TicketRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+          description: ''
+  /apis/timesheets:
+    get:
+      operationId: timesheets_list
+      description: API endpoint for viewing TimeSheet records
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - timesheets
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTimeSheetList'
+          description: ''
+  /apis/timesheets/{cl_time_entry_id}:
+    get:
+      operationId: timesheets_retrieve
+      description: API endpoint for viewing TimeSheet records
+      parameters:
+      - in: path
+        name: cl_time_entry_id
+        schema:
+          type: string
+        description: A unique value identifying this time sheet.
+        required: true
+      tags:
+      - timesheets
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeSheet'
+          description: ''
+  /clockify/api/export-entries:
+    get:
+      operationId: clockify_api_export_entries_retrieve
+      tags:
+      - clockify
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /clockify/api/time-entry:
+    get:
+      operationId: clockify_api_time_entry_retrieve
+      tags:
+      - clockify
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: clockify_api_time_entry_create
+      tags:
+      - clockify
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /connectwise-deskdirector/api/connectwise/ticket:
+    get:
+      operationId: connectwise_deskdirector_api_connectwise_ticket_retrieve
+      tags:
+      - connectwise-deskdirector
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: connectwise_deskdirector_api_connectwise_ticket_create
+      tags:
+      - connectwise-deskdirector
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /connectwise-deskdirector/api/deskdirector/ticket:
+    get:
+      operationId: connectwise_deskdirector_api_deskdirector_ticket_retrieve
+      tags:
+      - connectwise-deskdirector
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: connectwise_deskdirector_api_deskdirector_ticket_create
+      tags:
+      - connectwise-deskdirector
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /connectwise/api/company:
+    get:
+      operationId: connectwise_api_company_retrieve
+      tags:
+      - connectwise
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: connectwise_api_company_create
+      tags:
+      - connectwise
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /connectwise/api/contact:
+    get:
+      operationId: connectwise_api_contact_retrieve
+      tags:
+      - connectwise
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: connectwise_api_contact_create
+      tags:
+      - connectwise
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /connectwise/api/notion2cw/tickets:
+    get:
+      operationId: connectwise_api_notion2cw_tickets_retrieve
+      tags:
+      - connectwise
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /connectwise/api/notion2cw/tickets/stanup-notes:
+    get:
+      operationId: connectwise_api_notion2cw_tickets_stanup_notes_retrieve
+      tags:
+      - connectwise
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /connectwise/api/opportunity:
+    get:
+      operationId: connectwise_api_opportunity_retrieve
+      tags:
+      - connectwise
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: connectwise_api_opportunity_create
+      tags:
+      - connectwise
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /connectwise/api/project:
+    get:
+      operationId: connectwise_api_project_retrieve
+      tags:
+      - connectwise
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: connectwise_api_project_create
+      tags:
+      - connectwise
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /connectwise/api/project/ngrok:
+    get:
+      operationId: connectwise_api_project_ngrok_retrieve
+      tags:
+      - connectwise
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: connectwise_api_project_ngrok_create
+      tags:
+      - connectwise
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /connectwise/api/project/server/{id}:
+    get:
+      operationId: connectwise_api_project_server_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      tags:
+      - connectwise
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: connectwise_api_project_server_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      tags:
+      - connectwise
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /connectwise/api/ticket:
+    get:
+      operationId: connectwise_api_ticket_retrieve
+      tags:
+      - connectwise
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: connectwise_api_ticket_create
+      tags:
+      - connectwise
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /helper/api/crawl-cl-users:
+    get:
+      operationId: helper_api_crawl_cl_users_retrieve
+      tags:
+      - helper
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /helper/api/crawl-cw-users:
+    get:
+      operationId: helper_api_crawl_cw_users_retrieve
+      tags:
+      - helper
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /helper/api/download-notion-timesheet-database:
+    get:
+      operationId: helper_api_download_notion_timesheet_database_retrieve
+      tags:
+      - helper
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /helper/api/image-to-pdf/{id}/:
+    get:
+      operationId: helper_api_image_to_pdf_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          pattern: ^\w+$
+        required: true
+      tags:
+      - helper
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /helper/api/load-timesheets-data:
+    get:
+      operationId: helper_api_load_timesheets_data_retrieve
+      tags:
+      - helper
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /helper/api/refresh-timesheets-table:
+    get:
+      operationId: helper_api_refresh_timesheets_table_retrieve
+      tags:
+      - helper
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /logs/api/all:
+    get:
+      operationId: logs_api_all_retrieve
+      tags:
+      - logs
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /logs/api/log:
+    get:
+      operationId: logs_api_log_retrieve
+      tags:
+      - logs
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /makita/api/email:
+    get:
+      operationId: makita_api_email_retrieve
+      tags:
+      - makita
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: makita_api_email_create
+      tags:
+      - makita
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /test/api/ping:
+    get:
+      operationId: test_api_ping_retrieve
+      tags:
+      - test
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: test_api_ping_create
+      tags:
+      - test
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /test/api/post:
+    get:
+      operationId: test_api_post_retrieve
+      tags:
+      - test
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: test_api_post_create
+      tags:
+      - test
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /test/api/send-email:
+    get:
+      operationId: test_api_send_email_retrieve
+      tags:
+      - test
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /wave-openai/api/email-recording:
+    post:
+      operationId: wave_openai_api_email_recording_create
+      tags:
+      - wave-openai
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /wave-openai/api/pub-sub-email-recording:
+    post:
+      operationId: wave_openai_api_pub_sub_email_recording_create
+      tags:
+      - wave-openai
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /wave-openai/api/recording:
+    post:
+      operationId: wave_openai_api_recording_create
+      tags:
+      - wave-openai
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /zoho/api/opportunity/closed:
+    get:
+      operationId: zoho_api_opportunity_closed_retrieve
+      tags:
+      - zoho
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: zoho_api_opportunity_closed_create
+      tags:
+      - zoho
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+components:
+  schemas:
+    Board:
+      type: object
+      description: Serializer for Board model
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        cw_board_id:
+          type: integer
+          readOnly: true
+          description: ConnectWise Board ID
+        name:
+          type: string
+          maxLength: 100
+        is_active:
+          type: boolean
+          description: Indicates if the board is active (not inactive)
+        location_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        location_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        department_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        department_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        department_identifier:
+          type: string
+          nullable: true
+          maxLength: 100
+        sign_off_template_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        sign_off_template_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        board_icon_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        board_icon_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        board_icon_url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        notify_email_from:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        notify_email_from_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        service_manager_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        service_manager_identifier:
+          type: string
+          nullable: true
+          maxLength: 50
+        service_manager_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        work_role_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        work_role_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        work_type_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        work_type_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        project_flag:
+          type: boolean
+        bill_tickets_after_closed:
+          type: boolean
+        bill_ticket_separately:
+          type: boolean
+        bill_unapproved_time_expense:
+          type: boolean
+        override_billing_setup:
+          type: boolean
+        auto_assign_new_tickets:
+          type: boolean
+        auto_assign_new_ec_tickets:
+          type: boolean
+        auto_assign_new_portal_tickets:
+          type: boolean
+        discussions_locked:
+          type: boolean
+        time_entry_locked:
+          type: boolean
+        bill_time:
+          type: string
+          nullable: true
+          maxLength: 50
+        bill_expense:
+          type: string
+          nullable: true
+          maxLength: 50
+        bill_product:
+          type: string
+          nullable: true
+          maxLength: 50
+      required:
+      - created_at
+      - cw_board_id
+      - id
+      - name
+      - updated_at
+    BoardRequest:
+      type: object
+      description: Serializer for Board model
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        is_active:
+          type: boolean
+          description: Indicates if the board is active (not inactive)
+        location_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        location_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        department_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        department_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        department_identifier:
+          type: string
+          nullable: true
+          maxLength: 100
+        sign_off_template_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        sign_off_template_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        board_icon_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        board_icon_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        board_icon_url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        notify_email_from:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        notify_email_from_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        service_manager_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        service_manager_identifier:
+          type: string
+          nullable: true
+          maxLength: 50
+        service_manager_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        work_role_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        work_role_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        work_type_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        work_type_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        project_flag:
+          type: boolean
+        bill_tickets_after_closed:
+          type: boolean
+        bill_ticket_separately:
+          type: boolean
+        bill_unapproved_time_expense:
+          type: boolean
+        override_billing_setup:
+          type: boolean
+        auto_assign_new_tickets:
+          type: boolean
+        auto_assign_new_ec_tickets:
+          type: boolean
+        auto_assign_new_portal_tickets:
+          type: boolean
+        discussions_locked:
+          type: boolean
+        time_entry_locked:
+          type: boolean
+        bill_time:
+          type: string
+          nullable: true
+          maxLength: 50
+        bill_expense:
+          type: string
+          nullable: true
+          maxLength: 50
+        bill_product:
+          type: string
+          nullable: true
+          maxLength: 50
+      required:
+      - name
+    Company:
+      type: object
+      description: Serializer for Company model
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        cw_company_id:
+          type: integer
+          readOnly: true
+          description: ConnectWise Company ID
+        identifier:
+          type: string
+          maxLength: 100
+        name:
+          type: string
+          maxLength: 200
+        status:
+          type: integer
+          nullable: true
+          description: Company status
+        address_line1:
+          type: string
+          nullable: true
+          maxLength: 200
+        address_line2:
+          type: string
+          nullable: true
+          maxLength: 200
+        city:
+          type: string
+          nullable: true
+          maxLength: 100
+        state:
+          type: string
+          nullable: true
+          maxLength: 50
+        zip:
+          type: string
+          nullable: true
+          maxLength: 20
+        country_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        phone_number:
+          type: string
+          nullable: true
+          maxLength: 50
+        fax_number:
+          type: string
+          nullable: true
+          maxLength: 50
+        website:
+          type: string
+          nullable: true
+          maxLength: 200
+        territory_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        market_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        account_number:
+          type: string
+          nullable: true
+          maxLength: 100
+        default_contact_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        date_acquired:
+          type: string
+          format: date-time
+          nullable: true
+        annual_revenue:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,13}(?:\.\d{0,2})?$
+        is_lead:
+          type: boolean
+        is_vendor:
+          type: boolean
+        is_deleted:
+          type: boolean
+        is_unsubscribed:
+          type: boolean
+        tax_identifier:
+          type: string
+          nullable: true
+          maxLength: 100
+        billing_terms_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        tax_code_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        invoice_delivery_method_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        invoice_email:
+          type: string
+          nullable: true
+          maxLength: 200
+        mobile_guid:
+          type: string
+          nullable: true
+          maxLength: 100
+        linkedin_url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        timezone_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        last_updated_at:
+          type: string
+          format: date-time
+          nullable: true
+        last_updated_by:
+          type: string
+          nullable: true
+          maxLength: 100
+        date_entered_at:
+          type: string
+          format: date-time
+          nullable: true
+        entered_by:
+          type: string
+          nullable: true
+          maxLength: 100
+      required:
+      - created_at
+      - cw_company_id
+      - id
+      - identifier
+      - name
+      - updated_at
+    CompanyRequest:
+      type: object
+      description: Serializer for Company model
+      properties:
+        identifier:
+          type: string
+          minLength: 1
+          maxLength: 100
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        status:
+          type: integer
+          nullable: true
+          description: Company status
+        address_line1:
+          type: string
+          nullable: true
+          maxLength: 200
+        address_line2:
+          type: string
+          nullable: true
+          maxLength: 200
+        city:
+          type: string
+          nullable: true
+          maxLength: 100
+        state:
+          type: string
+          nullable: true
+          maxLength: 50
+        zip:
+          type: string
+          nullable: true
+          maxLength: 20
+        country_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        phone_number:
+          type: string
+          nullable: true
+          maxLength: 50
+        fax_number:
+          type: string
+          nullable: true
+          maxLength: 50
+        website:
+          type: string
+          nullable: true
+          maxLength: 200
+        territory_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        market_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        account_number:
+          type: string
+          nullable: true
+          maxLength: 100
+        default_contact_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        date_acquired:
+          type: string
+          format: date-time
+          nullable: true
+        annual_revenue:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,13}(?:\.\d{0,2})?$
+        is_lead:
+          type: boolean
+        is_vendor:
+          type: boolean
+        is_deleted:
+          type: boolean
+        is_unsubscribed:
+          type: boolean
+        tax_identifier:
+          type: string
+          nullable: true
+          maxLength: 100
+        billing_terms_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        tax_code_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        invoice_delivery_method_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        invoice_email:
+          type: string
+          nullable: true
+          maxLength: 200
+        mobile_guid:
+          type: string
+          nullable: true
+          maxLength: 100
+        linkedin_url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        timezone_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        last_updated_at:
+          type: string
+          format: date-time
+          nullable: true
+        last_updated_by:
+          type: string
+          nullable: true
+          maxLength: 100
+        date_entered_at:
+          type: string
+          format: date-time
+          nullable: true
+        entered_by:
+          type: string
+          nullable: true
+          maxLength: 100
+      required:
+      - identifier
+      - name
+    CompanyStatus:
+      type: object
+      description: Serializer for CompanyStatus model
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        cw_companystatus_id:
+          type: integer
+          readOnly: true
+          description: ConnectWise Company Status ID
+        name:
+          type: string
+          description: Status name
+          maxLength: 100
+        is_default:
+          type: boolean
+          description: Indicates if this is the default status
+        is_inactive:
+          type: boolean
+          description: Indicates if this status marks companies as inactive
+        notify:
+          type: boolean
+          description: Indicates if notification should be shown
+        disallow_saving:
+          type: boolean
+          description: Indicates if saving should be disallowed
+        custom_note:
+          type: boolean
+          description: Indicates if custom note is enabled
+        cancel_open_tracks:
+          type: boolean
+          description: Indicates if open tracks should be cancelled
+        notification_message:
+          type: string
+          nullable: true
+          description: Message to display when notify is true
+          maxLength: 1000
+        last_updated:
+          type: string
+          format: date-time
+          nullable: true
+          description: Last update timestamp
+        updated_by:
+          type: string
+          nullable: true
+          description: Username who last updated the status
+          maxLength: 100
+      required:
+      - created_at
+      - cw_companystatus_id
+      - id
+      - name
+      - updated_at
+    CompanyStatusRequest:
+      type: object
+      description: Serializer for CompanyStatus model
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: Status name
+          maxLength: 100
+        is_default:
+          type: boolean
+          description: Indicates if this is the default status
+        is_inactive:
+          type: boolean
+          description: Indicates if this status marks companies as inactive
+        notify:
+          type: boolean
+          description: Indicates if notification should be shown
+        disallow_saving:
+          type: boolean
+          description: Indicates if saving should be disallowed
+        custom_note:
+          type: boolean
+          description: Indicates if custom note is enabled
+        cancel_open_tracks:
+          type: boolean
+          description: Indicates if open tracks should be cancelled
+        notification_message:
+          type: string
+          nullable: true
+          description: Message to display when notify is true
+          maxLength: 1000
+        last_updated:
+          type: string
+          format: date-time
+          nullable: true
+          description: Last update timestamp
+        updated_by:
+          type: string
+          nullable: true
+          description: Username who last updated the status
+          maxLength: 100
+      required:
+      - name
+    Contact:
+      type: object
+      description: Serializer for Contact model
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        cw_contact_id:
+          type: integer
+          readOnly: true
+          description: ConnectWise Contact ID
+        first_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        last_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        title:
+          type: string
+          nullable: true
+          maxLength: 100
+        is_active:
+          type: boolean
+          description: Indicates if the contact is active (not inactive)
+        company_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Reference to ConnectWise Company
+        company_identifier:
+          type: string
+          nullable: true
+          maxLength: 100
+        company_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        site_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        site_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        company_location_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        company_location_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        default_phone_type:
+          type: string
+          nullable: true
+          maxLength: 50
+        default_phone_number:
+          type: string
+          nullable: true
+          maxLength: 50
+        portal_security_level:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        disable_portal_login:
+          type: boolean
+        unsubscribe:
+          type: boolean
+        married:
+          type: boolean
+        children:
+          type: boolean
+        mobile_guid:
+          type: string
+          nullable: true
+          maxLength: 100
+        default_billing:
+          type: boolean
+        ignore_duplicates:
+          type: boolean
+      required:
+      - created_at
+      - cw_contact_id
+      - id
+      - updated_at
+    ContactRequest:
+      type: object
+      description: Serializer for Contact model
+      properties:
+        first_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        last_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        title:
+          type: string
+          nullable: true
+          maxLength: 100
+        is_active:
+          type: boolean
+          description: Indicates if the contact is active (not inactive)
+        company_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Reference to ConnectWise Company
+        company_identifier:
+          type: string
+          nullable: true
+          maxLength: 100
+        company_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        site_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        site_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        company_location_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        company_location_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        default_phone_type:
+          type: string
+          nullable: true
+          maxLength: 50
+        default_phone_number:
+          type: string
+          nullable: true
+          maxLength: 50
+        portal_security_level:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        disable_portal_login:
+          type: boolean
+        unsubscribe:
+          type: boolean
+        married:
+          type: boolean
+        children:
+          type: boolean
+        mobile_guid:
+          type: string
+          nullable: true
+          maxLength: 100
+        default_billing:
+          type: boolean
+        ignore_duplicates:
+          type: boolean
+    Member:
+      type: object
+      description: Serializer for Member model
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        cw_member_id:
+          type: integer
+          readOnly: true
+          description: ConnectWise Member ID
+        identifier:
+          type: string
+          maxLength: 50
+        is_active:
+          type: boolean
+          description: Indicates if the member is active in ConnectWise
+        employee_identifier:
+          type: string
+          nullable: true
+          maxLength: 50
+        first_name:
+          type: string
+          nullable: true
+          maxLength: 50
+        last_name:
+          type: string
+          nullable: true
+          maxLength: 50
+        title:
+          type: string
+          nullable: true
+          maxLength: 100
+        hire_date:
+          type: string
+          format: date-time
+          nullable: true
+        last_login:
+          type: string
+          format: date-time
+          nullable: true
+        daily_capacity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          nullable: true
+        schedule_capacity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          nullable: true
+        office_email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        mobile_email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        primary_email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        office_phone:
+          type: string
+          nullable: true
+          maxLength: 20
+        office_extension:
+          type: string
+          nullable: true
+          maxLength: 10
+        admin_flag:
+          type: boolean
+        default_location_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        default_department_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        time_approver_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        expense_approver_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        hourly_cost:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          nullable: true
+        minimum_hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          nullable: true
+        photo_url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+      required:
+      - created_at
+      - cw_member_id
+      - id
+      - identifier
+      - updated_at
+    MemberRequest:
+      type: object
+      description: Serializer for Member model
+      properties:
+        identifier:
+          type: string
+          minLength: 1
+          maxLength: 50
+        is_active:
+          type: boolean
+          description: Indicates if the member is active in ConnectWise
+        employee_identifier:
+          type: string
+          nullable: true
+          maxLength: 50
+        first_name:
+          type: string
+          nullable: true
+          maxLength: 50
+        last_name:
+          type: string
+          nullable: true
+          maxLength: 50
+        title:
+          type: string
+          nullable: true
+          maxLength: 100
+        hire_date:
+          type: string
+          format: date-time
+          nullable: true
+        last_login:
+          type: string
+          format: date-time
+          nullable: true
+        daily_capacity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          nullable: true
+        schedule_capacity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          nullable: true
+        office_email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        mobile_email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        primary_email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        office_phone:
+          type: string
+          nullable: true
+          maxLength: 20
+        office_extension:
+          type: string
+          nullable: true
+          maxLength: 10
+        admin_flag:
+          type: boolean
+        default_location_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        default_department_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        time_approver_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        expense_approver_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        hourly_cost:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          nullable: true
+        minimum_hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          nullable: true
+        photo_url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+      required:
+      - identifier
+    PaginatedBoardList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Board'
+    PaginatedCompanyList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Company'
+    PaginatedCompanyStatusList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyStatus'
+    PaginatedContactList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+    PaginatedMemberList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Member'
+    PaginatedPriorityList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Priority'
+    PaginatedProjectList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Project'
+    PaginatedStatusList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Status'
+    PaginatedTicketList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ticket'
+    PaginatedTimeSheetList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TimeSheet'
+    Priority:
+      type: object
+      description: Serializer for Priority model
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        cw_priority_id:
+          type: integer
+          readOnly: true
+          description: ConnectWise Priority ID
+        name:
+          type: string
+          description: Priority name
+          maxLength: 100
+        color:
+          type: string
+          nullable: true
+          description: Color identifier for the priority
+          maxLength: 50
+        sort_order:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Order for sorting priorities
+        is_default:
+          type: boolean
+          description: Indicates if this is the default priority
+        image_link:
+          type: string
+          nullable: true
+          description: Link to priority image
+          maxLength: 255
+        urgency_sort_order:
+          type: string
+          nullable: true
+          description: Urgency sort order image link
+          maxLength: 255
+        last_updated_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Last update timestamp
+        last_updated_by:
+          type: string
+          nullable: true
+          description: Username who last updated the priority
+          maxLength: 100
+      required:
+      - created_at
+      - cw_priority_id
+      - id
+      - name
+      - updated_at
+    PriorityRequest:
+      type: object
+      description: Serializer for Priority model
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: Priority name
+          maxLength: 100
+        color:
+          type: string
+          nullable: true
+          description: Color identifier for the priority
+          maxLength: 50
+        sort_order:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Order for sorting priorities
+        is_default:
+          type: boolean
+          description: Indicates if this is the default priority
+        image_link:
+          type: string
+          nullable: true
+          description: Link to priority image
+          maxLength: 255
+        urgency_sort_order:
+          type: string
+          nullable: true
+          description: Urgency sort order image link
+          maxLength: 255
+        last_updated_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Last update timestamp
+        last_updated_by:
+          type: string
+          nullable: true
+          description: Username who last updated the priority
+          maxLength: 100
+      required:
+      - name
+    Project:
+      type: object
+      description: Serializer for Project model
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        cw_project_id:
+          type: integer
+          readOnly: true
+          description: ConnectWise Project ID
+        name:
+          type: string
+          description: Project name
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          description: Project description
+        actual_start:
+          type: string
+          format: date-time
+          nullable: true
+          description: Actual start date
+        actual_end:
+          type: string
+          format: date-time
+          nullable: true
+          description: Actual end date
+        estimated_start:
+          type: string
+          format: date-time
+          nullable: true
+          description: Estimated start date
+        estimated_end:
+          type: string
+          format: date-time
+          nullable: true
+          description: Estimated end date
+        actual_hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          description: Actual hours spent
+        budgeted_hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          description: Budgeted hours
+        scheduled_hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          description: Scheduled hours
+        billing_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,13}(?:\.\d{0,2})?$
+          description: Billing amount
+        billing_method:
+          type: string
+          nullable: true
+          description: Billing method
+          maxLength: 50
+        billing_rate_type:
+          type: string
+          nullable: true
+          description: Billing rate type
+          maxLength: 50
+        percent_complete:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,1}(?:\.\d{0,4})?$
+          description: Percentage of completion
+        is_closed:
+          type: boolean
+          description: Project closed status
+        company_name:
+          type: string
+          nullable: true
+          description: Company name
+          maxLength: 255
+        company_identifier:
+          type: string
+          nullable: true
+          description: Company identifier
+          maxLength: 100
+        contact_name:
+          type: string
+          nullable: true
+          description: Contact name
+          maxLength: 255
+        manager_name:
+          type: string
+          nullable: true
+          description: Project manager name
+          maxLength: 255
+        manager_identifier:
+          type: string
+          nullable: true
+          description: Project manager identifier
+          maxLength: 100
+        status_name:
+          type: string
+          nullable: true
+          description: Project status name
+          maxLength: 100
+        type_name:
+          type: string
+          nullable: true
+          description: Project type name
+          maxLength: 100
+        board_name:
+          type: string
+          nullable: true
+          description: Board name
+          maxLength: 100
+        department_name:
+          type: string
+          nullable: true
+          description: Department name
+          maxLength: 100
+        department_identifier:
+          type: string
+          nullable: true
+          description: Department identifier
+          maxLength: 50
+        location_name:
+          type: string
+          nullable: true
+          description: Location name
+          maxLength: 100
+        last_updated_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Last update timestamp
+        last_updated_by:
+          type: string
+          nullable: true
+          description: Username who last updated the project
+          maxLength: 100
+      required:
+      - created_at
+      - cw_project_id
+      - id
+      - name
+      - updated_at
+    ProjectRequest:
+      type: object
+      description: Serializer for Project model
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: Project name
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          description: Project description
+        actual_start:
+          type: string
+          format: date-time
+          nullable: true
+          description: Actual start date
+        actual_end:
+          type: string
+          format: date-time
+          nullable: true
+          description: Actual end date
+        estimated_start:
+          type: string
+          format: date-time
+          nullable: true
+          description: Estimated start date
+        estimated_end:
+          type: string
+          format: date-time
+          nullable: true
+          description: Estimated end date
+        actual_hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          description: Actual hours spent
+        budgeted_hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          description: Budgeted hours
+        scheduled_hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          description: Scheduled hours
+        billing_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,13}(?:\.\d{0,2})?$
+          description: Billing amount
+        billing_method:
+          type: string
+          nullable: true
+          description: Billing method
+          maxLength: 50
+        billing_rate_type:
+          type: string
+          nullable: true
+          description: Billing rate type
+          maxLength: 50
+        percent_complete:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,1}(?:\.\d{0,4})?$
+          description: Percentage of completion
+        is_closed:
+          type: boolean
+          description: Project closed status
+        company_name:
+          type: string
+          nullable: true
+          description: Company name
+          maxLength: 255
+        company_identifier:
+          type: string
+          nullable: true
+          description: Company identifier
+          maxLength: 100
+        contact_name:
+          type: string
+          nullable: true
+          description: Contact name
+          maxLength: 255
+        manager_name:
+          type: string
+          nullable: true
+          description: Project manager name
+          maxLength: 255
+        manager_identifier:
+          type: string
+          nullable: true
+          description: Project manager identifier
+          maxLength: 100
+        status_name:
+          type: string
+          nullable: true
+          description: Project status name
+          maxLength: 100
+        type_name:
+          type: string
+          nullable: true
+          description: Project type name
+          maxLength: 100
+        board_name:
+          type: string
+          nullable: true
+          description: Board name
+          maxLength: 100
+        department_name:
+          type: string
+          nullable: true
+          description: Department name
+          maxLength: 100
+        department_identifier:
+          type: string
+          nullable: true
+          description: Department identifier
+          maxLength: 50
+        location_name:
+          type: string
+          nullable: true
+          description: Location name
+          maxLength: 100
+        last_updated_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Last update timestamp
+        last_updated_by:
+          type: string
+          nullable: true
+          description: Username who last updated the project
+          maxLength: 100
+      required:
+      - name
+    Status:
+      type: object
+      description: Serializer for Status model
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        cw_status_id:
+          type: integer
+          readOnly: true
+          description: ConnectWise Status ID
+        name:
+          type: string
+          maxLength: 100
+        is_active:
+          type: boolean
+          description: Indicates if the status is active (not inactive)
+        board_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Reference to ConnectWise Board
+        board_name:
+          type: string
+          maxLength: 100
+        status_indicator_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        status_indicator_identifier:
+          type: string
+          nullable: true
+          maxLength: 50
+        status_indicator_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        status_indicator_color:
+          type: string
+          nullable: true
+          maxLength: 20
+        status_indicator_icon:
+          type: string
+          nullable: true
+          maxLength: 100
+        sort_order:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        display_on_board:
+          type: boolean
+        time_entry_not_allowed:
+          type: boolean
+        save_time_as_note:
+          type: boolean
+        closed_status:
+          type: boolean
+        round_robin_catchall:
+          type: boolean
+        default_flag:
+          type: boolean
+        customer_portal_flag:
+          type: boolean
+        escalation_status:
+          type: string
+          nullable: true
+          description: Status of escalation (e.g., NoEscalation, Responded)
+          maxLength: 50
+      required:
+      - board_id
+      - board_name
+      - created_at
+      - cw_status_id
+      - id
+      - name
+      - updated_at
+    StatusEnum:
+      enum:
+      - NEW
+      - CREATED
+      - UPDATED
+      - FAILED
+      type: string
+      description: |-
+        * `NEW` - NEW
+        * `CREATED` - CREATED
+        * `UPDATED` - UPDATED
+        * `FAILED` - FAILED
+    StatusRequest:
+      type: object
+      description: Serializer for Status model
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        is_active:
+          type: boolean
+          description: Indicates if the status is active (not inactive)
+        board_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Reference to ConnectWise Board
+        board_name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        status_indicator_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        status_indicator_identifier:
+          type: string
+          nullable: true
+          maxLength: 50
+        status_indicator_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        status_indicator_color:
+          type: string
+          nullable: true
+          maxLength: 20
+        status_indicator_icon:
+          type: string
+          nullable: true
+          maxLength: 100
+        sort_order:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        display_on_board:
+          type: boolean
+        time_entry_not_allowed:
+          type: boolean
+        save_time_as_note:
+          type: boolean
+        closed_status:
+          type: boolean
+        round_robin_catchall:
+          type: boolean
+        default_flag:
+          type: boolean
+        customer_portal_flag:
+          type: boolean
+        escalation_status:
+          type: string
+          nullable: true
+          description: Status of escalation (e.g., NoEscalation, Responded)
+          maxLength: 50
+      required:
+      - board_id
+      - board_name
+      - name
+    Ticket:
+      type: object
+      description: Serializer for Ticket model
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        cw_ticket_id:
+          type: integer
+          readOnly: true
+          description: ConnectWise Ticket ID
+        summary:
+          type: string
+          description: Ticket summary/title
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          description: Detailed ticket description
+        record_type:
+          type: string
+          description: Type of ticket (ServiceTicket or ProjectTicket)
+          maxLength: 50
+        board_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Board ID from ConnectWise
+        board_name:
+          type: string
+          nullable: true
+          description: Board name
+          maxLength: 100
+        status_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Status ID from ConnectWise
+        status_name:
+          type: string
+          nullable: true
+          description: Status name
+          maxLength: 100
+        company_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Company ID from ConnectWise
+        company_identifier:
+          type: string
+          nullable: true
+          description: Company identifier
+          maxLength: 100
+        company_name:
+          type: string
+          nullable: true
+          description: Company name
+          maxLength: 200
+        project_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Project ID if this is a project ticket
+        project_name:
+          type: string
+          nullable: true
+          description: Project name
+          maxLength: 255
+        phase_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Project phase ID
+        phase_name:
+          type: string
+          nullable: true
+          description: Project phase name
+          maxLength: 255
+        wbs_code:
+          type: string
+          nullable: true
+          description: Work breakdown structure code
+          maxLength: 50
+        severity:
+          type: string
+          nullable: true
+          description: Ticket severity
+          maxLength: 50
+        impact:
+          type: string
+          nullable: true
+          description: Ticket impact
+          maxLength: 50
+        priority_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Priority ID from ConnectWise
+        priority_name:
+          type: string
+          nullable: true
+          description: Priority name
+          maxLength: 100
+        type_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Type ID from ConnectWise
+        type_name:
+          type: string
+          nullable: true
+          description: Type name
+          maxLength: 100
+        site_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Site ID from ConnectWise
+        site_name:
+          type: string
+          nullable: true
+          description: Site name
+          maxLength: 100
+        location_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Location ID
+        location_name:
+          type: string
+          nullable: true
+          description: Location name
+          maxLength: 100
+        contact_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Contact ID from ConnectWise
+        contact_name:
+          type: string
+          nullable: true
+          description: Contact name
+          maxLength: 100
+        contact_phone:
+          type: string
+          nullable: true
+          description: Contact phone number
+          maxLength: 50
+        contact_email:
+          type: string
+          nullable: true
+          description: Contact email address
+          maxLength: 100
+        address_line1:
+          type: string
+          nullable: true
+          description: Address line 1
+          maxLength: 100
+        address_line2:
+          type: string
+          nullable: true
+          description: Address line 2
+          maxLength: 100
+        city:
+          type: string
+          nullable: true
+          description: City
+          maxLength: 50
+        state:
+          type: string
+          nullable: true
+          description: State
+          maxLength: 50
+        zip:
+          type: string
+          nullable: true
+          description: ZIP/Postal code
+          maxLength: 20
+        actual_hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          description: Actual hours spent
+        budgeted_hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          description: Budgeted hours
+        is_closed:
+          type: boolean
+          description: Whether ticket is closed
+        closed_by:
+          type: string
+          nullable: true
+          description: User who closed the ticket
+          maxLength: 100
+        closed_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: When ticket was closed
+        last_updated_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Last update timestamp
+        last_updated_by:
+          type: string
+          nullable: true
+          description: Username who last updated
+          maxLength: 100
+        date_entered_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: When ticket was created
+        entered_by:
+          type: string
+          nullable: true
+          description: User who created the ticket
+          maxLength: 100
+      required:
+      - created_at
+      - cw_ticket_id
+      - id
+      - summary
+      - updated_at
+    TicketRequest:
+      type: object
+      description: Serializer for Ticket model
+      properties:
+        summary:
+          type: string
+          minLength: 1
+          description: Ticket summary/title
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          description: Detailed ticket description
+        record_type:
+          type: string
+          minLength: 1
+          description: Type of ticket (ServiceTicket or ProjectTicket)
+          maxLength: 50
+        board_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Board ID from ConnectWise
+        board_name:
+          type: string
+          nullable: true
+          description: Board name
+          maxLength: 100
+        status_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Status ID from ConnectWise
+        status_name:
+          type: string
+          nullable: true
+          description: Status name
+          maxLength: 100
+        company_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Company ID from ConnectWise
+        company_identifier:
+          type: string
+          nullable: true
+          description: Company identifier
+          maxLength: 100
+        company_name:
+          type: string
+          nullable: true
+          description: Company name
+          maxLength: 200
+        project_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Project ID if this is a project ticket
+        project_name:
+          type: string
+          nullable: true
+          description: Project name
+          maxLength: 255
+        phase_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Project phase ID
+        phase_name:
+          type: string
+          nullable: true
+          description: Project phase name
+          maxLength: 255
+        wbs_code:
+          type: string
+          nullable: true
+          description: Work breakdown structure code
+          maxLength: 50
+        severity:
+          type: string
+          nullable: true
+          description: Ticket severity
+          maxLength: 50
+        impact:
+          type: string
+          nullable: true
+          description: Ticket impact
+          maxLength: 50
+        priority_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Priority ID from ConnectWise
+        priority_name:
+          type: string
+          nullable: true
+          description: Priority name
+          maxLength: 100
+        type_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Type ID from ConnectWise
+        type_name:
+          type: string
+          nullable: true
+          description: Type name
+          maxLength: 100
+        site_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Site ID from ConnectWise
+        site_name:
+          type: string
+          nullable: true
+          description: Site name
+          maxLength: 100
+        location_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Location ID
+        location_name:
+          type: string
+          nullable: true
+          description: Location name
+          maxLength: 100
+        contact_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Contact ID from ConnectWise
+        contact_name:
+          type: string
+          nullable: true
+          description: Contact name
+          maxLength: 100
+        contact_phone:
+          type: string
+          nullable: true
+          description: Contact phone number
+          maxLength: 50
+        contact_email:
+          type: string
+          nullable: true
+          description: Contact email address
+          maxLength: 100
+        address_line1:
+          type: string
+          nullable: true
+          description: Address line 1
+          maxLength: 100
+        address_line2:
+          type: string
+          nullable: true
+          description: Address line 2
+          maxLength: 100
+        city:
+          type: string
+          nullable: true
+          description: City
+          maxLength: 50
+        state:
+          type: string
+          nullable: true
+          description: State
+          maxLength: 50
+        zip:
+          type: string
+          nullable: true
+          description: ZIP/Postal code
+          maxLength: 20
+        actual_hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          description: Actual hours spent
+        budgeted_hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          description: Budgeted hours
+        is_closed:
+          type: boolean
+          description: Whether ticket is closed
+        closed_by:
+          type: string
+          nullable: true
+          description: User who closed the ticket
+          maxLength: 100
+        closed_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: When ticket was closed
+        last_updated_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Last update timestamp
+        last_updated_by:
+          type: string
+          nullable: true
+          description: Username who last updated
+          maxLength: 100
+        date_entered_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: When ticket was created
+        entered_by:
+          type: string
+          nullable: true
+          description: User who created the ticket
+          maxLength: 100
+      required:
+      - summary
+    TimeSheet:
+      type: object
+      properties:
+        cl_time_entry_id:
+          type: string
+          maxLength: 50
+        cl_user:
+          type: string
+          readOnly: true
+        cw_user:
+          type: string
+          readOnly: true
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        notes:
+          type: string
+          nullable: true
+          maxLength: 3000
+        cw_time_entry_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        dt_start:
+          type: string
+          maxLength: 30
+        dt_end:
+          type: string
+          nullable: true
+          maxLength: 30
+        number_updates:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        cw_ticket_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        dt_created:
+          type: string
+          format: date-time
+          readOnly: true
+        dt_modified:
+          type: string
+          format: date-time
+      required:
+      - cl_time_entry_id
+      - cl_user
+      - cw_user
+      - dt_created
+      - dt_modified
+      - dt_start
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Token-based authentication. Format: Token <your_token>'
